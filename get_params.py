@@ -38,14 +38,14 @@ class params ():
         #self.estimates_name = 'Estimates.csv'
         self.excludedvar_name = 'ExcludedVarDeriv.csv'
         
-        self.path_price = self.path_pd + self.price_name
+        #self.path_price = self.path_pd + self.price_name
         #self.path_SectorPrice = self.path_pd + self.sectoreprice_name
         #self.path_marketCap = self.path_pd + self.marketcap_name
         #self.path_esgCountry = self.path_pd + self.esgCountry_name
         #self.path_constit = self.path_pd + self.constituent_name
         #self.path_interestRates = self.path_pd + self.interestRates_name
         #self.path_EstimatesEps = self.path_pd + self.estimates_name
-        self.full_path_ExcludedVar = self.path_excludedvar + self.excludedvar_name
+        #self.full_path_ExcludedVar = self.path_excludedvar + self.excludedvar_name
         #self.path_esgCompany_scores = self.path_pd + 'Company ESG ratings/scores/'
         #self.path_esgCompany_infos = self.path_pd + 'Company ESG ratings/infos/'
         #self.path_esgCompany_IncEvent = self.path_pd + 'Incidents Events/'

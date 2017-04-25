@@ -16,7 +16,7 @@ from shutil import copyfile
 import re
 import unicodedata
 import get_params
-import ntpath
+#import ntpath
 
 class do_fromReuters ():
     
@@ -30,17 +30,24 @@ class do_fromReuters ():
             self.data = json.load (data_file)
         
         self.instance_params = get_params.params ()
-        #connexion
-        self.ftp_login = FTP (self.data ['ftp'], self.data ['user'], self.data ['pswr'], timeout=5)
-        Init.Log ( "########### Connected to FTP ###########", self.queue)
+        #connexion, partie du code supprimée
+        #self.ftp_login = FTP (self.data ['ftp'], self.data ['user'], self.data ['pswr'], timeout=5)
+        #Init.Log ( "########### Connected to FTP ###########", self.queue)
         
         self.path_latest = self.instance_params.get_ld_path () #Init.glbMissionPath + r'2 Data\1 Received\Market data\Latest data\\'
-        self.path_base = self.instance_params.get_ld_path () #Init.glbMissionPath + r'2 Data\1 Received\Market data\Base\\'
+        
+        #self.path_base = self.instance_params.get_ld_path () #Init.glbMissionPath + r'2 Data\1 Received\Market data\Base\\'
+        #Correction probablement Erreur Nourredine
+        self.get_base_path = self.instance_params.get_base_path()
+        
         self.path_archive = self.path_latest + 'Archive/'
+        
+        # os.path.dirname (os.path.realpath('__file__')) retourne le répertoire parent
         local_path = os.path.dirname (os.path.realpath('__file__'))
         self.path_temp_extrat = ''#local_path #os.path.join (local_path, '___temparchive/').replace ('\\', '/')
         
-        path_constit = self.instance_params.get_constit_path ()
+        # Inutile pour la mission C&M
+        #path_constit = self.instance_params.get_constit_path ()
         
         if not os.path.exists (self.path_archive ):
             os.makedirs (self.path_archive)

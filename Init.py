@@ -94,7 +94,7 @@ glbPathDict = {'LT-CGEISSLER':
                  {'_PathDir': 'H:/SANCHEZ/',
                  '_ConfigDir': 'D:/Mes Documents/AdOptim/',
                  '_RootFile': 'glbConfig.csv'},
-            'adcalcul2':
+            'ADCALCUL2':
                  {'_PathDir': '/media/adcalcul2/D/Dropbox/',
                  '_ConfigDir': '/media/adcalcul2/D/Dropbox/',
                  '_RootFile': 'glbConfig.csv'},
