@@ -18,7 +18,7 @@ import unicodedata
 import get_params
 import ntpath
 
-class do_fromFtp ():
+class do_fromReuters ():
     
     def __init__ (self, queue=None):
         self.queue = queue
@@ -1175,5 +1175,5 @@ class do_fromFtp ():
             del globals()[var]
      
 if __name__ == '__main__':
-    inst = do_fromFtp ()
+    inst = do_fromReuters ()
     inst.main ()

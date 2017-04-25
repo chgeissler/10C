@@ -1,2 +1,4 @@
 eclipse.preferences.version=1
-encoding/FromFtp.py=utf-8
+encoding/FromReuters.py=utf-8
+encoding/Init.py=cp1252
+encoding/TDataSet.py=cp1252
