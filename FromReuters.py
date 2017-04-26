@@ -1,4 +1,4 @@
-#coding: utf-8
+# -*- coding:utf-8 -*-
 from ftplib import FTP
 import json
 import Init
@@ -16,33 +16,40 @@ from shutil import copyfile
 import re
 import unicodedata
 import get_params
-#import ntpath
+import ntpath
 
 class do_fromReuters ():
     
     def __init__ (self, queue=None):
         self.queue = queue
         
-        Init.main (['-s global_11StL'])
-        
+        # RM : Chargement des paramètres du fichier GlbConfig
+        #Init.main (['-s global_11StL'])
+        Init.main (['-s 10C'])
+                
+        # RM : Suppression de ce code : connexion au FTP inutile
         #fichier des identifiants de FTP
-        with open('ftpid.json') as data_file:
-            self.data = json.load (data_file)
+        #with open('ftpid.json') as data_file:
+        #    self.data = json.load (data_file)
         
+        # RM : Chargement des paramètres du fichier
         self.instance_params = get_params.params ()
-        #connexion, partie du code supprimée
+        # RM : connexion, partie du code supprimée
         #self.ftp_login = FTP (self.data ['ftp'], self.data ['user'], self.data ['pswr'], timeout=5)
         #Init.Log ( "########### Connected to FTP ###########", self.queue)
         
+        # RM : Chargement du répertoire /Market data/Latest data/
         self.path_latest = self.instance_params.get_ld_path () #Init.glbMissionPath + r'2 Data\1 Received\Market data\Latest data\\'
         
         #self.path_base = self.instance_params.get_ld_path () #Init.glbMissionPath + r'2 Data\1 Received\Market data\Base\\'
         #Correction probablement Erreur Nourredine
+        # RM : Chargement du répertoire /Market data/Latest data/
         self.get_base_path = self.instance_params.get_base_path()
         
+        # RM : Chargement du répertoire Archive
         self.path_archive = self.path_latest + 'Archive/'
         
-        # os.path.dirname (os.path.realpath('__file__')) retourne le répertoire parent
+        # RM : os.path.dirname (os.path.realpath('__file__')) retourne le répertoire parent du code qui est appelé
         local_path = os.path.dirname (os.path.realpath('__file__'))
         self.path_temp_extrat = ''#local_path #os.path.join (local_path, '___temparchive/').replace ('\\', '/')
         
@@ -52,11 +59,12 @@ class do_fromReuters ():
         if not os.path.exists (self.path_archive ):
             os.makedirs (self.path_archive)
             
-        if os.path.isfile (path_constit):
-            self.df_constit_bis = self.instance_params.read_csv_ad(path_constit, index_col=0)
-        else:
-            self.df_constit_bis = pd.DataFrame ()
+        #if os.path.isfile (path_constit):
+        #    self.df_constit_bis = self.instance_params.read_csv_ad(path_constit, index_col=0)
+        #else:
+        #    self.df_constit_bis = pd.DataFrame ()
         
+        # RM : Voir si ces references servent ensuite
         self.repo_to_del = ['Old',  'Archive - bkp']
         # Dictionary of all files name
         self.dic_roots = {}
@@ -271,29 +279,33 @@ class do_fromReuters ():
         Les valeurs la liste des fichiers dans le repertoire'''
         
         Init.Log ( "Get all repository in Ftp", self.queue)
-        listParentRoot = self.ftp_login.nlst ()
+        listParentRoot = self.ftp_login.nlst ()   #R.M : Returns a list of files in a given directory (default the current)#
+        
+        # R.M : boucle pour renommer, le cas échéant, les fichiers dans le FTP (s'ils ont pour longueur 6)
         for name in self.ftp_login.nlst ():
             if len (name) == 6:
                 listParentRoot.remove(name)
                 #on rajoute 01, ça permetra de trier les noms par date.
                 listParentRoot += [name + '01']
         
+        # R.M : boucle pour supprimer les fichiers de la liste repo_to_del
         for rep_del in self.repo_to_del:
             if rep_del in listParentRoot:
                 listParentRoot.remove(rep_del)
     
+        # R.M : boucle pour 
         for name in listParentRoot:
             try:
-                #recuperation de list des fichiers dans le repertoire 'name'
+                #recuperation de list des fichiers dans le repertoire name
                 list_temp = self.ftp_login.nlst (name)
             except:
-                #on supprimer le 01 pour avoir le vrai nom de repertoire name
+                #on supprime le 01 pour avoir le vrai nom de repertoire name
                 name = name[:-2]
                 list_temp = self.ftp_login.nlst (name)
                 
             list_csv_names = []
             for path_inftp in list_temp:
-                #si le ftp renvoi le chemin complet, on recupere que le nom de fichier
+                #si le ftp renvoie le chemin complet, on recupère que le nom de fichier
                 if '/' in path_inftp:
                     list_csv_names += [path_inftp.split('/')[1]]
                 #si non juste le nom de fichier.

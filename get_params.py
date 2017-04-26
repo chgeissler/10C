@@ -1,16 +1,20 @@
+# -*- coding:utf-8 -*-
+
 import pandas as pd
 import Init
 import csv
 import os
 
 class params ():
-    def __init__ (self, mission='global_11StL'):
+    def __init__ (self, mission='10C'):
         Init.main (['-s %s' % mission])
         self.configfile = None
         
         self.path_mission = Init.glbGetMissionPath ()
+        
+        # RM : Implémenter get_configfile() au lieu de mettre les chemins des data en dur
         #self.path_dd = Init.glbGetMissionPath() + r'2 Data/2 Calculs/16 01 26 New derived data/'
-        self.path_dd = Init.glbGetMissionPath() + r'2 Data/2 Calculs/17 03 20 New derived data/'
+        self.path_dd = Init.glbGetMissionPath() + r'2 Data/2 Calculs/New derived data/'
         
         #self.path_ind = self.path_dd + 'Indic/'
         self.path_pd = Init.glbGetMissionPath() + r'2 Data/1 Received/Market data/Base/'
@@ -36,7 +40,7 @@ class params ():
         #self.constituent_name = 'constituents.csv'
         #self.interestRates_name = 'interestRates.csv'
         #self.estimates_name = 'Estimates.csv'
-        self.excludedvar_name = 'ExcludedVarDeriv.csv'
+        #self.excludedvar_name = 'ExcludedVarDeriv.csv'
         
         #self.path_price = self.path_pd + self.price_name
         #self.path_SectorPrice = self.path_pd + self.sectoreprice_name
@@ -112,6 +116,7 @@ class params ():
         else:
             return df
         
+    # RM : A coder pour récupérer les répertoires de lecture/écriture sur le répertoire 2.Data (Append, dérivation)
     def get_configfile (self):
         pass
     
